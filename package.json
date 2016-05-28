@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mingchia-andy-liu/poll-bot#readme",
   "dependencies": {
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "pg": "4.5.5"
   }
 }
