@@ -1,0 +1,19 @@
+{
+  "name": "poll-bot",
+  "version": "1.0.0",
+  "description": "slack polling bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mingchia-andy-liu/poll-bot.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mingchia-andy-liu/poll-bot/issues"
+  },
+  "homepage": "https://github.com/mingchia-andy-liu/poll-bot#readme"
+}
