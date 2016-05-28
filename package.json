@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/mingchia-andy-liu/poll-bot/issues"
   },
-  "homepage": "https://github.com/mingchia-andy-liu/poll-bot#readme"
+  "homepage": "https://github.com/mingchia-andy-liu/poll-bot#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
 }
