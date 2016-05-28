@@ -1,10 +1,13 @@
 var pg = require('../node_modules/pg');
-
 /*
-* queryObj = {
-*   query: String,
-*   arg: Array of escaped variables (optional)
-* }
+* Query wrapper that connects to the database and accepts a queryObj
+* @param queryObj - A JSON structure that consists of a query String
+*                   and an array of values be to escaped.
+*
+*                   var queryObj = {
+*                       query: String,
+*                       arg: Array of escaped variables (optional)
+*                   }
 *
 */
 var query = function(queryObj) {
@@ -12,15 +15,15 @@ var query = function(queryObj) {
       if(err) {
         return console.error('error fetching client from pool', err);
       }
-      client.query(queryObj.query, queryObj.arg, function(err, result) {
+      var args = queryObj.arg || [];
+      client.query(queryObj.query, args, function(err, result) {
         //call `done()` to release the client back to the pool
         done();
 
         if(err) {
           return console.error('error running query', err);
         }
-        console.log(result.rows[0].number);
-        //output: 1
+        console.log(result);
       });
     });
 }
