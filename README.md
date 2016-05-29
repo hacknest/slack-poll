@@ -21,11 +21,6 @@ This custom command allows users to create simple polls, and vote **anonymously*
 
 ## Usage
 
-1. [Opening a Poll](#open)
-1. [Closing a Poll](#close)
-1. [Casting a Vote](#vote)
-
-
 #### <a name="open">Opening a Poll</a>
 
 ---
@@ -51,7 +46,7 @@ To see voting results, you must close the poll with the command `/poll close`.
 </p>
 
 
-#### <a name="vote">Casting a Poll</a>
+#### <a name="vote">Casting a Vote</a>
 
 ---
 
