@@ -1,13 +1,6 @@
-```
-    ██╗██████╗  ██████╗ ██╗     ██╗
-   ██╔╝██╔══██╗██╔═══██╗██║     ██║
-  ██╔╝ ██████╔╝██║   ██║██║     ██║
- ██╔╝  ██╔═══╝ ██║   ██║██║     ██║
-██╔╝   ██║     ╚██████╔╝███████╗███████╗
-╚═╝    ╚═╝      ╚═════╝ ╚══════╝╚══════╝
-```
 <p align="center">
-    <img src="/assets/screenshots/auto-complete.png"/>
+    <img src="/assets/header.png" width="80%"/>
+    <img src="/assets/screenshots/auto-complete.png" width="90%"/>
 </p>
 
 ## Overview
@@ -57,4 +50,3 @@ To vote for a poll option, use the command `/poll vote` and provide the numerica
 <p align="left">
     <img src="/assets/screenshots/poll-vote.png" width="60%"/>
 </p>
-
