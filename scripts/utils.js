@@ -5,7 +5,7 @@ var _calculateBarBlocks = function(sum, value) {
 
 var _formatMessage = function(fields) {
     var message = bold('🏆 Top Result 🏆: ' + fields[0].title) + '\n\n\n';
-    var sum = fields.reduce(function(pv, cv) { return pv.value + cv.value; }, 0);
+    var sum = fields.reduce(function(pv, cv, index) { return pv[index].value + cv[index].value; }, 0);
 
     for (var i = 0; i < fields.length; i++) {
         var option  = fields[i];
