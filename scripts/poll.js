@@ -158,7 +158,7 @@ var results = function(params, callback) {
         }
 
         queryObj.query = 'SELECT COUNT(*), option FROM options INNER JOIN votes ' +
-                         'ON options.team_id = votes.team_id AND options.channel_id = votes.team_id ' +
+                         'ON options.team_id = votes.team_id AND options.channel_id = votes.channel_id ' +
                          'WHERE options.team_id = $1 AND options.channel_id = $2 GROUP BY option';
 
         db.query(queryObj, function(err, optionsInfo) {
