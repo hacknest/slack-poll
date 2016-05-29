@@ -149,7 +149,6 @@ var doPost = function(req, res) {
     var fields = req.body.text.split(DELIMITER);
     var command = fields[0].toLowerCase();
     var params = {
-        "title" : title,
         "team_id" : req.body.team_id,
         "team_domain" : req.body.team_domain,
         "channel_id" : req.body.channel_id,
@@ -170,6 +169,7 @@ var doPost = function(req, res) {
         case "open":
             var title = fields[1];
             var opts = fields.splice(2, fields.length - 1);
+            params.title = title;
             params.opts = opts;
             open(params, callback);
             break;
