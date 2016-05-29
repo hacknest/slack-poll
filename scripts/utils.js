@@ -5,6 +5,8 @@ var _formatMessage = function(fields) {
         var option  = fields[i];
         message += bold(option.title) + ':\n' + bold(option.value) + ' - ' + voteBar(option.value) + '\n\n';
     }
+
+    return message;
 };
 
 var resultResponse = function (info, options) {
@@ -27,7 +29,7 @@ var resultResponse = function (info, options) {
             "color": "#44cfaa",    // good, warning, danger, or HEX value
             "title": title,
             "text": _formatMessage(fields),
-			"mrkdwn_in": ["title", "pretext", "text"]
+			"mrkdwn_in": ["title", "text"]
     }];
     var message = {
         "response_type": "in_channel",
