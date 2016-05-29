@@ -23,19 +23,14 @@ var open = function(params, callback) {
 
         var addOptions = function() {
             // add options
-            for (i = 1; i < params.opts.length; i++) {
+            for (var i = 1; i <= params.opts.length; i++) {
                 var optionRow = {
                     table: 'option',
                     attr: 'id, team_id, channel_id, option',
-                    values: [i, param.team_id, params.channel_id, params.opts.[i]]
+                    values: [i, params.team_id, params.channel_id, params.opts[i]]
                 };
 
-                db.insertRow(optionRow, function(err, result) {
-                    if (err) {
-                        return callback(err, null);
-                    }
-                    callback(err, result);
-                });
+                db.insertRow(optionRow, function() {});
             }
         };
 
@@ -46,10 +41,10 @@ var open = function(params, callback) {
                     if (err) {
                         return callback(err, null);
                     }
-                    callback(err, result);
-                });
 
-                addOptions();
+                    addOptions();
+                    callback(null, 'REPLACE ME');
+                });
             });
         }
 
@@ -57,11 +52,10 @@ var open = function(params, callback) {
             if (err) {
                 return callback(err, null);
             }
-            callback(err, result);
-        });
 
-        addOptions();
-        return;
+            addOptions();
+            callback(null, 'REPLACE ME');
+        });
     });
 };
 
