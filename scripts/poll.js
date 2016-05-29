@@ -230,7 +230,8 @@ var doPost = function(req, res) {
         case "close":
             results(params, function(err, result) {
                 if (err) {
-                    return console.error('Failed to retrieve results', err);
+                    console.error('Failed to retrieve results', err);
+                    return callback(err, null);
                 }
                 close(params, function() {});
                 callback(err, result);
