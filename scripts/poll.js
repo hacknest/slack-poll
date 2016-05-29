@@ -28,13 +28,61 @@ var query = function(queryObj, callback) {
                 return callback(err, null);
             }
             console.log(result);
-            callback(null, result);
+            return callback(null, result);
         });
     });
 };
 
-var open = function() {
-    // open poll
+var pgInsertRow(params, callback) {
+
+    var sQuery =
+        'INSERT INTO $1 ($2) VALUES ($3)';
+
+    var columns =
+    var queryObj = {
+        query: sQuery,
+        arg: [params.table, params.attr, params.values]
+    };
+    query(sQuery, function(err, result) {
+        callback(err, result);
+    });
+};
+
+var open = function(params, callback) {
+    var sQuery =
+        'SELECT channel_id FROM poll WHERE team_id = $1';
+
+    var queryObj = {
+        query: sQuery,
+        arg: [params.team_id]
+    };
+
+    query.(queryObj, function(err, result) {
+        if (err) {
+            return callback(false);
+        }
+
+        var createRow = function() {
+            var row = {
+                table: 'poll',
+                attr: 'team_id, channel_id, title',
+                values: params.team_id + ', ' + params.channel_id + ', ' + params.title
+            }
+
+            pgInsertRow(row, function(err, result) {
+                if (err) {
+                    return callback(false);
+                }
+                return callback(result)
+            });
+        };
+
+        if (result.rowCount > 0) {
+            return close(createRow());
+        }
+
+        return createRow();
+    });
 };
 
 var close = function(params) {
