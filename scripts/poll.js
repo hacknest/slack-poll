@@ -3,6 +3,9 @@ var UTILS = require('./utils');
 var DELIMITER = ' ';
 
 var open = function(params, callback) {
+    if (params.opts.length === 0) {
+        return callback(null, { text: "Please specify options for the poll" });
+    }
     var sQuery =
         'SELECT channel_id FROM poll WHERE team_id = $1';
 
