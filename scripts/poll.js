@@ -1,4 +1,4 @@
-var pg = require('../node_modules/pg');
+var pg = require('pg');
 /*
 * Query wrapper that connects to the database and accepts a queryObj
 * @param queryObj - A JSON structure that consists of a query String
@@ -10,23 +10,25 @@ var pg = require('../node_modules/pg');
 *                   }
 *
 */
-var query = function(queryObj) {
+var query = function(queryObj, callback) {
     pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         if (err) {
-            return console.error('error fetching client from pool', err);
+            console.error('error fetching client from pool', err);
+            return callback(err, null);
         }
         var args = queryObj.arg || [];
         client.query(queryObj.query, args, function(err, result) {
             // client back to the pool
             done();
             if (err) {
-                return console.error('error running query', err);
+                console.error('error running query', err);
+                return callback(err, null);
             }
             console.log(result);
-            return result;
+            callback(null, result);
         });
     });
-}
+};
 
 var open = function() {
     // open poll
@@ -40,19 +42,38 @@ var vote = function(params) {
 
 };
 
-var results = function(params) {
-    var query =
-        'SELECT * FROM poll WHERE team_id = ' + params.team_id
-        ' AND channel_id = ' + params.channel_id;
+var results = function(params, callback) {
+    var sQuery =
+        'SELECT title FROM poll WHERE team_id = $1 AND channel_id = $2';
 
     var queryObj = {
-        query: query
+        query: sQuery,
+        arg: [params.team_id, params.channel_id]
     };
 
-    var result = query(queryObj);
+    query(queryObj, function(err, pollInfo) {
+        if (err)
+            return;
 
-    var message = '';
-    return message;
+        queryObj.query = 'SELECT option, votes FROM options WHERE team_id = $1 AND channel_id = $2';
+
+        query(queryObj, function(err, optionsInfo) {
+            if (err)
+                return;
+
+            var message = {
+                "response_type": "in_channel",
+                "text": pollInfo.rows[0].title,
+                "attachments": []
+            };
+
+            optionsInfo.rows.forEach(function(item) {
+                message.attachments.push({"text" : item.option + ", Votes: " + item.votes});
+            });
+
+            callback(message);
+        });
+    });
 };
 
 module.exports = {
