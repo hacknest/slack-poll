@@ -1,18 +1,6 @@
-var pg = require('pg');
 var db = require('db');
-/*
-* Query wrapper that connects to the database and accepts a queryObj
-* @param queryObj - A JSON structure that consists of a query String
-*                   and an array of values be to escaped.
-*
-*                   var queryObj = {
-*                       query: String,
-*                       arg: Array of escaped variables (optional)
-*                   }
-*
-*/
-
 var DELIMITER = ' ';
+
 var open = function(params, callback) {
     var sQuery =
         'SELECT channel_id FROM poll WHERE team_id = $1';
