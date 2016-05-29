@@ -102,6 +102,10 @@ var voteBar = function(count) {
     return voteBar;
 };
 
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
 
 var validToken = function(token) {
     var validToken = process.env.SLACK_TOKEN;
