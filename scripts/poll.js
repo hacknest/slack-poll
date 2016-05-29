@@ -146,8 +146,12 @@ var results = function(params, callback) {
     };
 
     db.query(queryObj, function(err, pollInfo) {
-        if (err || pollInfo.rowCount === 0) {
+        if (err) {
             return callback(err, null);
+        }
+
+        if (pollInfo.rowCount === 0) {
+            return callback(null, { text: 'No poll is currently open.' });
         }
 
         queryObj.query = 'SELECT COUNT(*), option FROM options INNER JOIN votes ' + 
