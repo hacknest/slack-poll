@@ -27,7 +27,7 @@ var open = function(params, callback) {
                 var optionRow = {
                     table: 'options',
                     attr: 'id, team_id, channel_id, option',
-                    values: [i, params.team_id, params.channel_id, params.opts[i]]
+                    values: [i, params.team_id, params.channel_id, params.opts[i - 1]]
                 };
 
                 db.insertRow(optionRow, function() {});
