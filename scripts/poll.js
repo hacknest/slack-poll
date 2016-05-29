@@ -52,14 +52,16 @@ var results = function(params, callback) {
     };
 
     query(queryObj, function(err, pollInfo) {
-        if (err)
-            return;
+        if (err || pollInfo.rowCount === 0) {
+            return callback(err, null);
+        }
 
         queryObj.query = 'SELECT option, votes FROM options WHERE team_id = $1 AND channel_id = $2';
 
         query(queryObj, function(err, optionsInfo) {
-            if (err)
-                return;
+            if (err) {
+                return callback(err, null);
+            }
 
             var message = {
                 "response_type": "in_channel",
