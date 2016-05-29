@@ -10,7 +10,6 @@ CREATE TABLE options(
 	team_id VARCHAR,
 	channel_id VARCHAR,
 	option VARCHAR NOT NULL,
-	votes INT DEFAULT 0,
 	PRIMARY KEY(id, team_id, channel_id)
 );
 

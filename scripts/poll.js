@@ -81,9 +81,65 @@ var close = function(params, callback) {
     });
 };
 
-var vote = function(params) {
-    //
+var vote = function(params, callback) {
+    //Check if specified option is valid
+    var oQuery = {
+        query : 'SELECT * FROM options WHERE id = $1 AND team_id = $2 AND channel_id = $3',
+        arg: [params.id, params.team_id, params.channel_id]
+    };
 
+    db.query(oQuery, function(err, results) {
+        if (err) {
+            console.log('Unable to retrieve results from options', err);
+            return callback(err, null);
+        }
+
+        if (results.rowCount === 0) {
+            return callback(null, {text : 'Please specify a valid option for the poll'});
+        }
+
+        //Valid option. Now check if user has already voted
+        oQuery.query = 'SELECT * FROM votes WHERE team_id = $1 AND channel_id = $2 AND user_id = $3';
+        oQuery.arg = [params.team_id, params.channel_id, params.user_id];
+
+        db.query(oQuery, function(err, results) {
+            if (err) {
+                console.log('Unable to retrieve results from votes', err);
+                return callback(err, null);
+            }
+            
+            if (results.rowCount === 1) {
+                //User has already voted, update vote
+                var optionId = results.rows[0].option_id;
+                oQuery.query = 'UPDATE votes SET option_id = $1 WHERE team_id = $2 AND channel_id = $3 AND user_id = $4';
+                oQuery.arg = [optionId, params.team_id, params.channel_id, params.user_id];
+                db.query(oQuery, function(err, results) {
+                    if (err) {
+                        console.log('Unable to update vote', err);
+                        return callback(err, null);
+                    }
+
+                    return callback(null, { text: 'Successfully updated your vote' });
+                });
+            } else {
+                //User hasn't voted yet, insert into table
+                var options = {
+                    table : 'votes',
+                    attr : 'team_id, channel_id, user_id, option_id',
+                    values : [params.team_id, params.channel_id, params.user_id, params.id]
+                };
+                console.log(options);
+                db.insertRow(options, function(err, results) {
+                    if (err) {
+                        console.log('Unable to insert vote', err);
+                        return callback(err, null);
+                    }
+
+                    return callback(null, { text: 'Successfully cast your vote' });
+                });
+            }
+        });
+    });
 };
 
 var results = function(params, callback) {
@@ -100,7 +156,9 @@ var results = function(params, callback) {
             return callback(err, null);
         }
 
-        queryObj.query = 'SELECT option, votes FROM options WHERE team_id = $1 AND channel_id = $2';
+        queryObj.query = 'SELECT COUNT(*), option FROM options INNER JOIN votes ' + 
+                         'ON options.team_id = votes.team_id AND options.channel_id = votes.team_id ' + 
+                         'WHERE options.team_id = $1 AND options.channel_id = $2 GROUP BY option';
 
         db.query(queryObj, function(err, optionsInfo) {
             if (err) {
@@ -114,7 +172,7 @@ var results = function(params, callback) {
             };
 
             optionsInfo.rows.forEach(function(item) {
-                message.attachments.push({"text" : item.option + ", Votes: " + item.votes});
+                message.attachments.push({"text" : item.option + ", Votes: " + item.count});
             });
 
             callback(null, message);
@@ -159,6 +217,11 @@ var doPost = function(req, res) {
             });
             break;
         case "vote":
+            var id = fields[1];
+            if (isNaN(id)) {
+                return res.send('Please specify a valid option number.');
+            }
+            params.id = id;
             vote(params, callback);
             break;
         default:
