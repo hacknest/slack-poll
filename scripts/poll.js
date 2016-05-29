@@ -36,7 +36,13 @@ var query = function(queryObj, callback) {
 var pgInsertRow = function(params, callback) {
 
     var sQuery =
-        'INSERT INTO ' + params.table + ' (' + params.attr + ') VALUES ($1, $2, $3)';
+        'INSERT INTO ' + params.table + ' (' + params.attr + ') VALUES (';
+
+    for (i = 1; i <= params.values.length; i++) {
+        sQuery += '$' + i + ', ';
+    }
+
+    sQuery += ')';
 
     var queryObj = {
         query: sQuery,
@@ -94,7 +100,7 @@ var close = function(params, callback) {
         query : 'DELETE FROM poll WHERE team_id = $1 AND channel_id = $2',
         arg: [params.team_id, params.channel_id]
     };
-    
+
     query(oQuery, function() {
         oQuery.query = 'DELETE FROM options WHERE team_id = $1 AND channel_id = $2';
         query(oQuery, function() {
