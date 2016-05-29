@@ -1,3 +1,4 @@
+var request = require('request');
 
 var _formatMessage = function(fields) {
     var message = bold('🏆 Top Vote 🏆: ' + toTitleCase(fields[0].title)) + '\n\n';
@@ -69,6 +70,24 @@ var openResponse = function (params) {
     return message;
 };
 
+var sendReply = function(url, message) {
+    if (!url) {
+        return console.error('No url specified for sendReply');
+    }
+
+    var options = {
+        uri: url,
+        method: 'POST',
+        json: message
+    };
+
+    request(options, function (err, res, body) {
+        if (err || res.statusCode != 200) {
+            console.error('Unable to reply to response_url: ', err)
+        }
+    });
+}
+
 var bold = function(text) {
     return '*' + text + '*';
 };
@@ -122,5 +141,6 @@ var validToken = function(token) {
 module.exports = {
     openResponse : openResponse,
     resultResponse : resultResponse,
-    validToken: validToken
+    validToken: validToken,
+    sendReply: sendReply
 };

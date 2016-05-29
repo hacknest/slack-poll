@@ -48,7 +48,9 @@ var open = function(params, callback) {
 
                     addOptions();
                     var message = UTILS.openResponse(params);
-                    callback(null, message);
+                    callback(null, { text: 'Posting your poll now' });
+
+                    UTILS.sendReply(params.response_url, message);
                 });
             });
         }
@@ -60,7 +62,9 @@ var open = function(params, callback) {
 
             addOptions();
             var message = UTILS.openResponse(params);
-            callback(null, message);
+            callback(null, { text: 'Posting your poll now' });
+
+            UTILS.sendReply(params.response_url, message);
         });
     });
 };
@@ -181,7 +185,9 @@ var results = function(params, callback) {
             }
 
             var message = UTILS.resultResponse(pollInfo, optionsInfo.rows);
-            callback(null, message);
+            callback(null, { text: 'Posting results of poll now' });
+
+            UTILS.sendReply(params.response_url, message);
         });
     });
 };
