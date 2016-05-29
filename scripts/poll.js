@@ -33,16 +33,16 @@ var query = function(queryObj, callback) {
     });
 };
 
-var pgInsertRow(params, callback) {
+var pgInsertRow = function(params, callback) {
 
     var sQuery =
         'INSERT INTO $1 ($2) VALUES ($3)';
 
-    var columns =
     var queryObj = {
         query: sQuery,
         arg: [params.table, params.attr, params.values]
     };
+
     query(sQuery, function(err, result) {
         callback(err, result);
     });
@@ -62,26 +62,29 @@ var open = function(params, callback) {
             return callback(false);
         }
 
-        var createRow = function() {
-            var row = {
-                table: 'poll',
-                attr: 'team_id, channel_id, title',
-                values: params.team_id + ', ' + params.channel_id + ', ' + params.title
-            }
-
-            pgInsertRow(row, function(err, result) {
-                if (err) {
-                    return callback(false);
-                }
-                return callback(result)
-            });
-        };
-
-        if (result.rowCount > 0) {
-            return close(createRow());
+        var row = {
+            table: 'poll',
+            attr: 'team_id, channel_id, title',
+            values: params.team_id + ', ' + params.channel_id + ', ' + params.title
         }
 
-        return createRow();
+        if (result.rowCount > 0) {
+            return close(function() {
+                pgInsertRow(row, function(err, result) {
+                    if (err) {
+                        return callback(false);
+                    }
+                    return callback(result)
+                });
+            });
+        }
+
+        return pgInsertRow(row, function(err, result) {
+            if (err) {
+                return callback(false);
+            }
+            return callback(result)
+        });
     });
 };
 
