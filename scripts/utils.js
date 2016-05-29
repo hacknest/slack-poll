@@ -4,12 +4,12 @@ var _calculateBarBlocks = function(sum, value) {
 };
 
 var _formatMessage = function(fields) {
-    var message = bold('🏆 Top Result 🏆: ' + fields[0].title.titleize()) + '\n\n\n';
+    var message = bold('🏆 Top Result 🏆: ' + fields[0].title.toTitleCase()) + '\n\n\n';
     var sum = fields.reduce(function(pv, cv) { return parseInt(pv) + parseInt(cv.value); }, 0);
 
     for (var i = 0; i < fields.length; i++) {
         var option  = fields[i];
-        message += bold(option.title.titleize()) + ':\n' + bold(Math.floor(option.value/sum*100)) + '% - ';
+        message += bold(option.title.toTitleCase()) + ':\n' + bold(Math.floor(option.value/sum*100)) + '% - ';
 
         if (option.value == 0) {
             message += inlineBlock('😭') + '\n\n';
@@ -34,10 +34,10 @@ var resultResponse = function (info, options) {
         return a.value < b.value ? 1 : -1;
     });
 
-    var title = "Poll Results for " + info.title.titleize();
+    var title = "Poll Results for " + info.title.toTitleCase();
 
     var attachment = [{
-            "fallback": title.titleize(),
+            "fallback": title.toTitleCase(),
             "color": "#44cfaa",    // good, warning, danger, or HEX value
             "title": title,
             "text": _formatMessage(fields),
@@ -53,15 +53,15 @@ var resultResponse = function (info, options) {
 var openResponse = function (params) {
     var fields = params.opts.map(function (opts, index) {
         return {
-            "title" : ((index+1).toString() + ". " + opts).titleize(),
+            "title" : ((index+1).toString() + ". " + opts).toTitleCase(),
             "short" : false
         };
     });
 
     var attachment = [{
-            "fallback": params.title.titleize(),
+            "fallback": params.title.toTitleCase(),
             "color": "#d4484d",    // good, warning, danger, or HEX value
-            "title": params.title.titleize(),
+            "title": params.title.toTitleCase(),
             "fields": fields,
             "footer": "Cast your vote using the slash command /poll vote [option]."
     }];
@@ -102,8 +102,7 @@ var voteBar = function(count) {
     return voteBar;
 };
 
-function toTitleCase(str)
-{
+function toTitleCase(str) {}
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
