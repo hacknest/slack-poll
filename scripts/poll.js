@@ -21,8 +21,8 @@ var open = function(params, callback) {
 
         var pollRow = {
             table: 'poll',
-            attr: 'team_id, channel_id, title',
-            values: [params.team_id, params.channel_id, params.title]
+            attr: 'team_id, channel_id, title, user_id',
+            values: [params.team_id, params.channel_id, params.title, params.user_id]
         };
 
         var addOptions = function() {
