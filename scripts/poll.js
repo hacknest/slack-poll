@@ -229,7 +229,9 @@ var doPost = function(req, res) {
             break;
         case "close":
             results(params, function(err, result) {
-                console.error('Failed to retrieve results', err);
+                if (err) {
+                    return console.error('Failed to retrieve results', err);
+                }
                 close(params, function() {});
                 callback(err, result);
             });
