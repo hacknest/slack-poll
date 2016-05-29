@@ -127,8 +127,11 @@ var doPost = function(req, res) {
             open(params, callback);
             break;
         case "close":
-            close(params, function() {}); //Don't care about return value
-            results(params, callback);
+            results(params, function(err, result) {
+                console.error('Failed to retrieve results', err);
+                close(params, function() {});
+                callback(err, result);
+            });
             break;
         case "vote":
             vote(params, callback);
