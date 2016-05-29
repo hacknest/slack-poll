@@ -47,7 +47,7 @@ var open = function(params, callback) {
                     }
 
                     addOptions();
-                    var message = UTILS.displayResultResponse(params);
+                    var message = UTILS.openResponse(params);
                     callback(null, message);
                 });
             });
@@ -59,7 +59,7 @@ var open = function(params, callback) {
             }
 
             addOptions();
-            var message = UTILS.displayResultResponse(params);
+            var message = UTILS.openResponse(params);
             callback(null, message);
         });
     });
@@ -162,14 +162,14 @@ var results = function(params, callback) {
 
         queryObj.query = '(SELECT COUNT(*), option FROM options INNER JOIN votes ' +
                              'ON options.team_id = votes.team_id AND ' +
-                             'options.channel_id = votes.channel_id ' + 
+                             'options.channel_id = votes.channel_id ' +
                              'AND options.id = votes.option_id ' +
                              'WHERE options.team_id = $1 AND ' +
-                             'options.channel_id = $2 GROUP BY option) ' + 
+                             'options.channel_id = $2 GROUP BY option) ' +
                          'UNION ALL ' +
                          '(SELECT 0, option FROM options WHERE NOT EXISTS ' +
-                            '(SELECT * FROM votes WHERE '+ 
-                            'votes.option_id = options.id AND ' + 
+                            '(SELECT * FROM votes WHERE '+
+                            'votes.option_id = options.id AND ' +
                             'votes.team_id = options.team_id AND ' +
                             'votes.channel_id = options.channel_id) AND ' +
                             'options.team_id = $1 AND ' +
@@ -238,9 +238,11 @@ var doPost = function(req, res) {
             break;
         case "help":
             var message = {
-                "response_type": "in_channel",
-                "text": "YOU CAN MAKE A POLL HERE!"
+                "text": "You can open a poll by /poll open [title]:[opt1], [opt2], [opt3], ..." +
+                        "\nYou can close a poll by /poll close" +
+                        "\nYou can cast a vote by /poll vote [option number]"
             };
+            break;
         default:
             var result = {
                 "text": "No command " + command + " found"

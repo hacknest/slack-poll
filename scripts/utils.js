@@ -30,7 +30,7 @@ var resultResponse = function (info, options) {
     return message;
 };
 
-var displayResultResponse = function (params) {
+var openResponse = function (params) {
     var fields = params.opts.map(function (opts, index) {
         return {
             "title" : (index+1).toString() + ". " + opts,
@@ -69,7 +69,7 @@ var inlineBlock = function(text) {
 
 var blockQuote = function(text) {
     return '```' + text + '```';
-}
+};
 
 var voteBar = function(count) {
     var voteBar = '`';
@@ -79,7 +79,7 @@ var voteBar = function(count) {
     voteBar += '`';
 
     return voteBar;
-}
+};
 
 
 var validToken = function(token) {
@@ -88,7 +88,7 @@ var validToken = function(token) {
 };
 
 module.exports = {
-    displayResultResponse : displayResultResponse,
+    openResponse : openResponse,
     resultResponse : resultResponse,
     validToken: validToken
 };
