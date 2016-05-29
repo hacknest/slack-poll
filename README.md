@@ -1,14 +1,14 @@
 ```
-    ██╗██████╗  ██████╗ ██╗     ██╗     
-   ██╔╝██╔══██╗██╔═══██╗██║     ██║     
-  ██╔╝ ██████╔╝██║   ██║██║     ██║     
- ██╔╝  ██╔═══╝ ██║   ██║██║     ██║     
+    ██╗██████╗  ██████╗ ██╗     ██╗
+   ██╔╝██╔══██╗██╔═══██╗██║     ██║
+  ██╔╝ ██████╔╝██║   ██║██║     ██║
+ ██╔╝  ██╔═══╝ ██║   ██║██║     ██║
 ██╔╝   ██║     ╚██████╔╝███████╗███████╗
 ╚═╝    ╚═╝      ╚═════╝ ╚══════╝╚══════╝
 ```
 
 ## Overview
-A [Slash Command](https://api.slack.com/slash-commands) integration for the [Slack](https://slack.com/) messaging app. 
+A [Slash Command](https://api.slack.com/slash-commands) integration for the [Slack](https://slack.com/) messaging app.
 > Messages that start with a slash `/` are commands and will behave differently from regular messages. Slash Commands enable Slack users to interact with external services directly from Slack.
 
 This custom command allows users to create simple polls, and vote **anonymously** from the list of options.
@@ -41,7 +41,7 @@ To see voting results, you must close the poll with the command `/poll close`.
 
 To vote for a poll option, use the command `/poll vote` and provide the numerical index of your voting choice.
 
-##Example
+## Example
 ```
 /poll open What's our team name?:Ship it!, Git Gud, Works on my machine!
 /poll vote 1

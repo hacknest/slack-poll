@@ -1,26 +1,18 @@
-function toTitleCase(str) {
-    return str.replace(/\w\S*/g, function(txt) {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-};
-
-var _calculateBarBlocks = function(sum, value) {
-    var count = Math.floor(value/sum*20);   // 100% is 20 blocks
-    return voteBar(count);
-};
 
 var _formatMessage = function(fields) {
-    var message = bold('🏆 Top Result 🏆: ' + toTitleCase(fields[0].title)) + '\n\n\n';
-    var sum = fields.reduce(function(pv, cv) { return parseInt(pv) + parseInt(cv.value); }, 0);
+    var message = bold('🏆 Top Vote 🏆: ' + toTitleCase(fields[0].title)) + '\n\n';
+    var sum = fields.reduce(function(pv, cv) {
+        return parseInt(pv) + parseInt(cv.value);
+    }, 0);
 
     for (var i = 0; i < fields.length; i++) {
         var option  = fields[i];
-        message += bold(toTitleCase(option.title)) + ':\n' + bold(Math.floor(option.value/sum*100)) + '% - ';
+        message += bold(toTitleCase(option.title)) + ':\n' + bold(Math.floor(option.value/sum * 100)) + '% - ';
 
         if (option.value == 0) {
             message += inlineBlock('😭') + '\n\n';
         } else {
-            message += _calculateBarBlocks(sum, option.value) + '\n\n';
+            message += voteBar(sum, option.value); + '\n\n';
         }
     }
 
@@ -40,8 +32,7 @@ var resultResponse = function (info, options) {
         return a.value < b.value ? 1 : -1;
     });
 
-    var title = "Poll Results for " + toTitleCase(info.rows[0].title);
-
+    var title = 'Poll Results for \'' + toTitleCase(info.rows[0].title) + '\''
     var attachment = [{
             "fallback": title,
             "color": "#44cfaa",    // good, warning, danger, or HEX value
@@ -98,7 +89,12 @@ var blockQuote = function(text) {
     return '```' + text + '```';
 };
 
-var voteBar = function(count) {
+var voteBar = function(total, votes) {
+    var count = _voteBarCount(total, votes)
+    if (count == 0) {
+        return '';
+    }
+
     var voteBar = '`';
     for (var i = 0; i < count; i++) {
         voteBar += '█';
@@ -106,6 +102,16 @@ var voteBar = function(count) {
     voteBar += '`';
 
     return voteBar;
+};
+
+function toTitleCase(str) {
+    return str.replace(/\w\S*/g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+};
+
+var _voteBarCount = function(sum, value) {
+    return count = Math.floor(value/sum * 20);   // 100% is 20 blocks
 };
 
 var validToken = function(token) {
