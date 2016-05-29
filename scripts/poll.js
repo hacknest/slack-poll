@@ -25,7 +25,7 @@ var open = function(params, callback) {
             // add options
             for (var i = 1; i <= params.opts.length; i++) {
                 var optionRow = {
-                    table: 'option',
+                    table: 'options',
                     attr: 'id, team_id, channel_id, option',
                     values: [i, params.team_id, params.channel_id, params.opts[i]]
                 };
