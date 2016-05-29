@@ -12,7 +12,7 @@ var _formatMessage = function(fields) {
         if (option.value == 0) {
             message += inlineBlock('😭') + '\n\n';
         } else {
-            message += voteBar(sum, option.value); + '\n\n';
+            message += voteBar(sum, option.value) + '\n\n';
         }
     }
 
