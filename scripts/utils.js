@@ -31,7 +31,7 @@ var resultResponse = function (info, options) {
     });
 
     fields.sort(function (a, b) {
-        return a.value > b.value ? 1 : -1;
+        return a.value < b.value ? 1 : -1;
     });
 
     var title = "Poll Results for " + info.title.titleize();
