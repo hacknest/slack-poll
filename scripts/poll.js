@@ -10,6 +10,9 @@ var pg = require('pg');
 *                   }
 *
 */
+
+var DELIMITER = ' ';
+
 var query = function(queryObj, callback) {
     pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         if (err) {
@@ -78,9 +81,52 @@ var results = function(params, callback) {
     });
 };
 
+var doPost = function(req, res) {
+	var fields = req.params.text.split(DELIMITER);
+	var command = fields[0].toLowerCase();
+	var params = {
+		"title" : title,
+		"team_id" : req.params.team_id,
+		"team_domain" : req.params.team_domain,
+		"channel_id" : req.params.channel_id,
+		"channel_name" : req.params.channel_name,
+		"user_id" : req.params.user_id,
+		"user_name" : req.params.user_name,
+		"command" : req.params.command,
+		"text" : req.params.text,
+		"response_url" : req.params.response_url
+	}
+	var callback = function (err, result) {
+		if (err)
+			return;
+		res.json(result);
+	}
+
+	switch (command) {
+		case "open":
+			var title = fields[1];
+			var opts = fields.splice(2, fields.length - 1);
+			open(params, callback);
+			break;
+		case "close":
+			result(params, callback);
+			break;
+		case "vote":
+			vote(params, callback);
+			break;
+		default:
+			var result = {
+			    "text": "No command " + command + "found"
+			}
+			res.json(result);
+			break;
+	}
+};
+
 module.exports = {
     open: open,
     close: close,
     vote: vote,
-    results: results
+    results: results,
+    doPost : doPost
 };

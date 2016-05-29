@@ -3,15 +3,13 @@ var fs = require('fs');
 var pg = require('pg');
 var poll = require('./scripts/poll');
 var app = express();
+var poll = require('./scripts/poll');
 
 app.set('port', (process.env.PORT || 5000));
 
-app.get('/', function(request, response) {
-    response.send('Hello world!');
-});
-
 app.post('/', function(req, res) {
-    res.send('Hello world!');
+	poll.doPost(req, res);
+    // res.send('Hello world!');
 });
 
 app.listen(app.get('port'), function() {
