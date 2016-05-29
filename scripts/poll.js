@@ -12,32 +12,56 @@ var open = function(params, callback) {
 
     db.query(queryObj, function(err, result) {
         if (err) {
-            return callback(false);
+            return callback(err, null);
         }
 
-        var row = {
+        var pollRow = {
             table: 'poll',
             attr: 'team_id, channel_id, title',
             values: [params.team_id, params.channel_id, params.title]
         };
 
+        var addOptions = function() {
+            // add options
+            for (i = 1; i < params.opts.length; i++) {
+                var optionRow = {
+                    table: 'option',
+                    attr: 'id, team_id, channel_id, option',
+                    values: [i, param.team_id, params.channel_id, params.opts.[i]]
+                };
+
+                db.insertRow(optionRow, function(err, result) {
+                    if (err) {
+                        return callback(err, null);
+                    }
+                    callback(err, result);
+                });
+            }
+        };
+
         if (result.rowCount > 0) {
             return close(params, function() {
-                db.insertRow(row, function(err, result) {
+                // create poll
+                db.insertRow(pollRow, function(err, result) {
                     if (err) {
-                        return callback(false);
+                        return callback(err, null);
                     }
-                    return callback(result);
+                    callback(err, result);
                 });
+
+                addOptions();
             });
         }
 
-        return db.insertRow(row, function(err, result) {
+        db.insertRow(pollRow, function(err, result) {
             if (err) {
-                return callback(false);
+                return callback(err, null);
             }
-            return callback(result);
+            callback(err, result);
         });
+
+        addOptions();
+        return;
     });
 };
 
