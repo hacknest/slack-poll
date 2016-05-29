@@ -1,9 +1,9 @@
 var express = require('express');
 var fs = require('fs');
 var pg = require('pg');
-var poll = require('./scripts/poll');
 var app = express();
 var poll = require('./scripts/poll');
+var utils = require('./scripts/utils');
 var bodyParser = require('body-parser');
 
 app.set('port', (process.env.PORT || 5000));
@@ -14,8 +14,16 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.post('/', function(req, res) {
-	poll.doPost(req, res);
-    // res.send('Hello world!');
+    if (!req.body) {
+        res.send('Invalid request.');
+        return;
+    }
+
+    if (utils.validToken(req.body.token_id)) {
+        poll.doPost(req, res);
+    } else {
+        res.send('Invalid token.');
+    }
 });
 
 app.listen(app.get('port'), function() {

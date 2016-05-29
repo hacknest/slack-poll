@@ -45,7 +45,12 @@ var displayResultResponse = function (params) {
     return message;
 };
 
+var validToken = function(token) {
+    return (token === process.env.DATABASE_URL);
+};
+
 module.exports = {
     displayResultResponse : displayResultResponse,
-    resultResponse : resultResponse
+    resultResponse : resultResponse,
+    verifyToken: verifyToken
 };
