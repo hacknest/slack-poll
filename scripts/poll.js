@@ -242,6 +242,7 @@ var doPost = function(req, res) {
                         "\nYou can close a poll by /poll close" +
                         "\nYou can cast a vote by /poll vote [option number]"
             };
+            res.json(message);
             break;
         default:
             var result = {
