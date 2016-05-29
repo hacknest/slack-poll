@@ -51,6 +51,37 @@ var displayResultResponse = function (params) {
     return message;
 };
 
+var bold = function(text) {
+    return '*' + text + '*';
+};
+
+var italics = function(text) {
+    return '_' + text + '_';
+};
+
+var strike = function(text) {
+    return '~' + text + '~';
+};
+
+var inlineBlock = function(text) {
+    return '`' + text + '`';
+};
+
+var blockQuote = function(text) {
+    return '```' + text + '```';
+}
+
+var voteBar = function(count) {
+    var voteBar = '`';
+    for (var i = 0; i < count; i++) {
+        voteBar += '█';
+    }
+    voteBar += '`';
+
+    return voteBar;
+}
+
+
 var validToken = function(token) {
     var validToken = process.env.SLACK_TOKEN;
     return validToken ? token === validToken : true;
