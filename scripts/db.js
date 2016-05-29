@@ -25,7 +25,7 @@ var query = function(queryObj, callback) {
                 console.error('error running query', err);
                 return callback(err, null);
             }
-            console.log(result);
+
             return callback(null, result);
         });
     });

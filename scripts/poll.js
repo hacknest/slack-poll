@@ -95,7 +95,7 @@ var vote = function(params, callback) {
         }
 
         if (results.rowCount === 0) {
-            return callback(null, {text : 'Please specify a valid option for the poll'});
+            return callback(null, {text : 'Either no poll is open or you have specified an invalid option'});
         }
 
         //Valid option. Now check if user has already voted
@@ -128,7 +128,7 @@ var vote = function(params, callback) {
                     attr : 'team_id, channel_id, user_id, option_id',
                     values : [params.team_id, params.channel_id, params.user_id, params.id]
                 };
-                console.log(options);
+
                 db.insertRow(options, function(err, results) {
                     if (err) {
                         console.log('Unable to insert vote', err);
