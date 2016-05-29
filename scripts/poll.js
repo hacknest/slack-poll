@@ -147,7 +147,7 @@ var doPost = function(req, res) {
             break;
         default:
             var result = {
-                "text": "No command " + command + "found"
+                "text": "No command " + command + " found"
             };
             res.json(result);
             break;
