@@ -1,4 +1,5 @@
 var db = require('./db');
+var UTILS = require('./utils');
 var DELIMITER = ' ';
 
 var open = function(params, callback) {
@@ -43,7 +44,8 @@ var open = function(params, callback) {
                     }
 
                     addOptions();
-                    callback(null, 'REPLACE ME');
+                    var message = UTILS.displayResultResponse(params);
+                    callback(null, message);
                 });
             });
         }
@@ -54,7 +56,8 @@ var open = function(params, callback) {
             }
 
             addOptions();
-            callback(null, 'REPLACE ME');
+            var message = UTILS.displayResultResponse(params);
+            callback(null, message);
         });
     });
 };
@@ -101,7 +104,7 @@ var vote = function(params, callback) {
                 console.log('Unable to retrieve results from votes', err);
                 return callback(err, null);
             }
-            
+
             if (results.rowCount === 1) {
                 //User has already voted, update vote
                 var optionId = results.rows[0].option_id;
@@ -154,8 +157,8 @@ var results = function(params, callback) {
             return callback(null, { text: 'No poll is currently open.' });
         }
 
-        queryObj.query = 'SELECT COUNT(*), option FROM options INNER JOIN votes ' + 
-                         'ON options.team_id = votes.team_id AND options.channel_id = votes.team_id ' + 
+        queryObj.query = 'SELECT COUNT(*), option FROM options INNER JOIN votes ' +
+                         'ON options.team_id = votes.team_id AND options.channel_id = votes.team_id ' +
                          'WHERE options.team_id = $1 AND options.channel_id = $2 GROUP BY option';
 
         db.query(queryObj, function(err, optionsInfo) {
@@ -163,16 +166,7 @@ var results = function(params, callback) {
                 return callback(err, null);
             }
 
-            var message = {
-                "response_type": "in_channel",
-                "text": pollInfo.rows[0].title,
-                "attachments": []
-            };
-
-            optionsInfo.rows.forEach(function(item) {
-                message.attachments.push({"text" : item.option + ", Votes: " + item.count});
-            });
-
+            var message = UTILS.formatResponse(optionsInfo, optionsInfo);
             callback(null, message);
         });
     });
