@@ -166,7 +166,7 @@ var results = function(params, callback) {
                 return callback(err, null);
             }
 
-            var message = UTILS.resultResponse(optionsInfo, optionsInfo);
+            var message = UTILS.resultResponse(pollInfo, optionsInfo.rows);
             callback(null, message);
         });
     });

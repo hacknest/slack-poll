@@ -52,5 +52,5 @@ var validToken = function(token) {
 module.exports = {
     displayResultResponse : displayResultResponse,
     resultResponse : resultResponse,
-    verifyToken: verifyToken
+    validToken: validToken
 };
