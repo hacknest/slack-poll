@@ -216,6 +216,11 @@ var doPost = function(req, res) {
             params.id = id;
             vote(params, callback);
             break;
+        case "help":
+            var message = {
+                "response_type": "in_channel",
+                "text": "YOU CAN MAKE A POLL HERE!"
+            };
         default:
             var result = {
                 "text": "No command " + command + " found"
