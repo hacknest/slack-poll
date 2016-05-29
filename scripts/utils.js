@@ -1,18 +1,24 @@
 var resultResponse = function (info, options) {
     var fields = options.map(function (opts, index) {
         return {
-            "title" : index === 0 ? "🏆" + opts.option + "🏆" : opts.option,
+            "title" : opts.option,
             "value" : opts.count,
             "short" : false
         };
     });
 
-    var title = "Poll result: " + options[0].option + " has won the " + info.rows[0].title + ".";
+    fields.sort(function (a, b) {
+        return a.count > b.count ? 1 : -1;
+    });
+
+    fields[0].title = "🏆" + fields[0].title + "🏆";
+
+    var title = "Poll result: " + options[0].option + " has won";
 
     var attachment = [{
             "fallback": title,
-            "color": "good",    // good, warning, danger, or HEX value
-            "pretext": "❤ Your poll result!! ❤",
+            "color": "#44cfaa",    // good, warning, danger, or HEX value
+            "pretext": "Your poll result",
             "title": "Result",
             "text": title,
             "fields": fields
@@ -34,7 +40,7 @@ var displayResultResponse = function (params) {
 
     var attachment = [{
             "fallback": params.title,
-            "color": "danger",    // good, warning, danger, or HEX value
+            "color": "#d4484d",    // good, warning, danger, or HEX value
             "title": params.title,
             "fields": fields
     }];
