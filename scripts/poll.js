@@ -42,6 +42,7 @@ var close = function(params) {
 };
 
 var vote = function(params) {
+    //
 
 };
 
@@ -106,6 +107,7 @@ var doPost = function(req, res) {
 		case "open":
 			var title = fields[1];
 			var opts = fields.splice(2, fields.length - 1);
+            params.opts = opts;
 			open(params, callback);
 			break;
 		case "close":
