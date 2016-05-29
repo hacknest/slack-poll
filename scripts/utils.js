@@ -40,10 +40,10 @@ var resultResponse = function (info, options) {
         return a.value < b.value ? 1 : -1;
     });
 
-    var title = "Poll Results for " + toTitleCase(info.title);
+    var title = "Poll Results for " + toTitleCase(info.rows[0].title);
 
     var attachment = [{
-            "fallback": toTitleCase(title),
+            "fallback": title,
             "color": "#44cfaa",    // good, warning, danger, or HEX value
             "title": title,
             "text": _formatMessage(fields),
