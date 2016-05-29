@@ -19,7 +19,7 @@ app.post('/', function(req, res) {
         return;
     }
 
-    if (utils.validToken(req.body.token_id)) {
+    if (utils.validToken(req.body.token)) {
         poll.doPost(req, res);
     } else {
         res.send('Invalid token.');
