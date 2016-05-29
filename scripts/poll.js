@@ -76,13 +76,7 @@ var close = function(params, callback) {
         arg: [params.team_id, params.channel_id]
     };
 
-    db.query(oQuery, function() {
-        oQuery.query = 'DELETE FROM options WHERE team_id = $1 AND channel_id = $2';
-        db.query(oQuery, function() {
-            oQuery.query = 'DELETE FROM votes WHERE team_id = $1 AND channel_id = $2';
-            db.query(oQuery, callback);
-        });
-    });
+    db.query(oQuery, callback);
 };
 
 var vote = function(params, callback) {
