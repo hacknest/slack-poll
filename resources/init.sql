@@ -2,7 +2,7 @@ CREATE TABLE poll(
 	team_id VARCHAR,
 	channel_id VARCHAR,
 	title VARCHAR NOT NULL,
-	user_id INT NOT NULL,
+	user_id VARCHAR NOT NULL,
 	PRIMARY KEY(team_id, channel_id)
 );
 
