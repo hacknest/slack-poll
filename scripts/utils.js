@@ -1,9 +1,15 @@
 var _formatMessage = function(fields) {
-    var message = '🏆 Top Result 🏆: ' + bold(fields[0].title) + '\n\n\n';
+    var message = bold('🏆 Top Result 🏆: ' + fields[0].title) + '\n\n\n';
 
     for (var i = 0; i < fields.length; i++) {
         var option  = fields[i];
-        message += bold(option.title) + ':\n' + bold(option.value) + ' - ' + voteBar(option.value) + '\n\n';
+        message += bold(option.title) + ':\n' + bold(option.value) + ' - ';
+
+        if (option.value === 0) {
+            message += inlineBlock('😭') + '\n\n';
+        } else {
+            message += voteBar(option.value) + '\n\n';
+        }
     }
 
     return message;
