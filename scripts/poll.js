@@ -85,8 +85,20 @@ var open = function(params, callback) {
     });
 };
 
-var close = function(params) {
+var close = function(params, callback) {
     // tear down DB row
+    var oQuery = {
+        query : 'DELETE FROM poll WHERE team_id = $1 AND channel_id = $2',
+        arg: [params.team_id, params.channel_id]
+    };
+    
+    query(oQuery, function() {
+        oQuery.query = 'DELETE FROM options WHERE team_id = $1 AND channel_id = $2';
+        query(oQuery, function() {
+            oQuery.query = 'DELETE FROM votes WHERE team_id = $1 AND channel_id = $2';
+            query(oQuery, callback);
+        });
+    });
 };
 
 var vote = function(params) {
@@ -159,7 +171,8 @@ var doPost = function(req, res) {
             open(params, callback);
             break;
         case "close":
-            result(params, callback);
+            close(params, function() {}); //Don't care about return value
+            results(params, callback);
             break;
         case "vote":
             vote(params, callback);
