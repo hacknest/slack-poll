@@ -93,7 +93,7 @@ var results = function(params, callback) {
                 message.attachments.push({"text" : item.option + ", Votes: " + item.votes});
             });
 
-            callback(message);
+            callback(null, message);
         });
     });
 };
