@@ -29,8 +29,8 @@ This custom command allows users to create simple polls, and vote **anonymously*
 
 To create a new poll, use the command `/poll open` and provide a title and a list of options to vote for. Each channel may have at most one open poll -- creating a new poll will close an existing opened poll.
 
-<p align="center">
-    <img src="/assets/screenshots/poll-open.png"/>
+<p align="left">
+    <img src="/assets/screenshots/poll-open.png" width="60%"/>
 </p>
 
 #### <a name="close">Closing a Poll</a>
@@ -41,8 +41,8 @@ To create a new poll, use the command `/poll open` and provide a title and a lis
 
 To see voting results, you must close the poll with the command `/poll close`.
 
-<p align="center">
-    <img src="/assets/screenshots/poll-close.png"/>
+<p align="left">
+    <img src="/assets/screenshots/poll-close.png" width="70%"/>
 </p>
 
 
@@ -54,7 +54,7 @@ To see voting results, you must close the poll with the command `/poll close`.
 
 To vote for a poll option, use the command `/poll vote` and provide the numerical index of your voting choice.
 
-<p align="center">
-    <img src="/assets/screenshots/poll-vote.png"/>
+<p align="left">
+    <img src="/assets/screenshots/poll-vote.png" width="60%"/>
 </p>
 
