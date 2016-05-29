@@ -2,7 +2,7 @@ var resultResponse = function (info, options) {
     var fields = options.map(function (opts, index) {
         return {
             "title" : index === 0 ? "🏆" + opts.option + "🏆" : opts.option,
-            "value" : opts.counts,
+            "value" : opts.count,
             "short" : false
         };
     });
