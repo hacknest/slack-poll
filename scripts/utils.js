@@ -14,7 +14,7 @@ var _formatMessage = function(fields) {
         if (option.value === 0) {
             message += inlineBlock('😭') + '\n\n';
         } else {
-            message += _calculateBarBlocks(sum, option.value)(option.value) + '\n\n';
+            message += _calculateBarBlocks(sum, option.value) + '\n\n';
         }
     }
 
