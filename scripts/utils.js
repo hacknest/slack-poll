@@ -1,3 +1,8 @@
+var _calculateBarBlocks = function(sum, value) {
+    var count = Math.floor(value/sum*20);   // 100% is 20 blocks
+    return voteBar(count);
+};
+
 var _formatMessage = function(fields) {
     var message = bold('🏆 Top Result 🏆: ' + fields[0].title) + '\n\n\n';
     var sum = fields.reduce(function(pv, cv) { return pv.value + cv.value; }, 0);
@@ -9,16 +14,11 @@ var _formatMessage = function(fields) {
         if (option.value === 0) {
             message += inlineBlock('😭') + '\n\n';
         } else {
-            message += _calcuteBarProgress(sum, option.value)(option.value) + '\n\n';
+            message += _calculateBarBlocks(sum, option.value)(option.value) + '\n\n';
         }
     }
 
     return message;
-};
-
-var _calcuteBarProgress = function(sum, value) {
-    var count = Math.floor(value/sum*20);   // 100% is 20 blocks
-    return voteBar(count);
 };
 
 var resultResponse = function (info, options) {
