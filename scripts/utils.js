@@ -19,7 +19,7 @@ var resultResponse = function (info, options) {
     };
     var message = {
         "response_type": "in_channel",
-        "attachments": attachement
+        "attachments": attachment
     };
     return message;
 };
@@ -27,21 +27,20 @@ var resultResponse = function (info, options) {
 var displayResultResponse = function (params) {
     var fields = params.opts.map(function (opts, index) {
         return {
-            "title" : index.toString() + ". :" + opts.option,
+            "title" : (index+1).toString() + ". " + opts,
             "short" : false
         };
     });
 
-    var title = "You poll:" + params.title;
     var attachment = {
-            "fallback": title,
+            "fallback": params.title,
             "color": "danger",    // good, warning, danger, or HEX value
-            "title": title,
+            "title": params.title,
             "fields": fields
     };
     var message = {
         "response_type": "in_channel",
-        "attachments": attachement
+        "attachments": attachment
     };
     return message;
 };
