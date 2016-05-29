@@ -36,7 +36,9 @@ var insertRow = function(params, callback) {
         'INSERT INTO ' + params.table + ' (' + params.attr + ') VALUES (';
 
     for (i = 1; i <= params.values.length; i++) {
-        sQuery += '$' + i + ', ';
+        sQuery += '$' + i;
+        if (i != params.values.length)
+            sQuery += ', ';
     }
 
     sQuery += ')';
