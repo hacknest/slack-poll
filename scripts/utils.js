@@ -11,7 +11,7 @@ var _formatMessage = function(fields) {
         var option  = fields[i];
         message += bold(option.title) + ':\n' + bold(Math.floor(option.value/sum*100)) + '% - ';
 
-        if (option.value === 0) {
+        if (option.value == 0) {
             message += inlineBlock('😭') + '\n\n';
         } else {
             message += _calculateBarBlocks(sum, option.value) + '\n\n';
@@ -31,7 +31,7 @@ var resultResponse = function (info, options) {
     });
 
     fields.sort(function (a, b) {
-        return a.count > b.count ? 1 : -1;
+        return a.value > b.value ? 1 : -1;
     });
 
     var title = "Poll Results";
