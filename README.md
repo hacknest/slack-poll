@@ -13,7 +13,7 @@ A [Slash Command](https://api.slack.com/slash-commands) integration for the [Sla
 
 This custom command allows users to create simple polls, and vote **anonymously** from the list of options.
 
-| Authors | [**@mingchia-andy-liu**](https://github.com/mingchia-andy-liu) | [**@jshepard**](https://github.com/jshepard) | [**@tony-dinh**](https://github.com/tony-dinh)|
+| Authors | [**@mingchia-andy-liu**](https://github.com/mingchia-andy-liu) | [**@jshephard**](https://github.com/jshephard) | [**@tony-dinh**](https://github.com/tony-dinh)|
 |:-------:|:----:|:-----:|:----:|
 
 ## Usage
