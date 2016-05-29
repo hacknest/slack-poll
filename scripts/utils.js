@@ -6,7 +6,7 @@ var _formatMessage = function(fields) {
     }, 0);
 
     if (sum === 0) {
-        return italics('No votes have been casted.');
+        return italics('No votes have been cast.');
     }
 
     var message = bold('🏆 Top Vote 🏆: ' + toTitleCase(fields[0].title)) + '\n\n';
