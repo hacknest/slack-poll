@@ -82,25 +82,25 @@ var results = function(params, callback) {
 };
 
 var doPost = function(req, res) {
-	var fields = req.params.text.split(DELIMITER);
+	var fields = req.body.text.split(DELIMITER);
 	var command = fields[0].toLowerCase();
 	var params = {
 		"title" : title,
-		"team_id" : req.params.team_id,
-		"team_domain" : req.params.team_domain,
-		"channel_id" : req.params.channel_id,
-		"channel_name" : req.params.channel_name,
-		"user_id" : req.params.user_id,
-		"user_name" : req.params.user_name,
-		"command" : req.params.command,
-		"text" : req.params.text,
-		"response_url" : req.params.response_url
-	}
+		"team_id" : req.body.team_id,
+		"team_domain" : req.body.team_domain,
+		"channel_id" : req.body.channel_id,
+		"channel_name" : req.body.channel_name,
+		"user_id" : req.body.user_id,
+		"user_name" : req.body.user_name,
+		"command" : req.body.command,
+		"text" : req.body.text,
+		"response_url" : req.body.response_url
+	};
 	var callback = function (err, result) {
 		if (err)
 			return;
 		res.json(result);
-	}
+	};
 
 	switch (command) {
 		case "open":
@@ -117,7 +117,7 @@ var doPost = function(req, res) {
 		default:
 			var result = {
 			    "text": "No command " + command + "found"
-			}
+			};
 			res.json(result);
 			break;
 	}
