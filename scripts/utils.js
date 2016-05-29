@@ -1,11 +1,15 @@
 var request = require('request');
 
 var _formatMessage = function(fields) {
-    var message = bold('🏆 Top Vote 🏆: ' + toTitleCase(fields[0].title)) + '\n\n';
     var sum = fields.reduce(function(pv, cv) {
         return parseInt(pv) + parseInt(cv.value);
     }, 0);
 
+    if (sum === 0) {
+        return italics('No votes have been casted.');
+    }
+
+    var message = bold('🏆 Top Vote 🏆: ' + toTitleCase(fields[0].title)) + '\n\n';
     for (var i = 0; i < fields.length; i++) {
         var option  = fields[i];
         message += bold(toTitleCase(option.title)) + ':\n' + bold(Math.floor(option.value/sum * 100)) + '% - ';
