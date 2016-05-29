@@ -1,3 +1,12 @@
+var _formatMessage = function(fields) {
+    var message = '🏆 Top Result 🏆: ' + bold(fields[0].title) + '\n\n\n';
+
+    for (var i = 0; i < fields.count; i++) {
+        var option  = fields[i];
+        message += bold(option.title) + ':\n' + bold(option.value) + ' - ' + voteBar(option.value) + '\n\n';
+    }
+};
+
 var resultResponse = function (info, options) {
     var fields = options.map(function (opts, index) {
         return {
@@ -11,17 +20,14 @@ var resultResponse = function (info, options) {
         return a.count > b.count ? 1 : -1;
     });
 
-    fields[0].title = "🏆" + fields[0].title + "🏆";
-
-    var title = "Poll result: " + options[0].option + " has won";
+    var title = "Poll Results";
 
     var attachment = [{
             "fallback": title,
             "color": "#44cfaa",    // good, warning, danger, or HEX value
-            "pretext": "Your poll result",
-            "title": "Result",
-            "text": title,
-            "fields": fields
+            "title": title,
+            "text": _formatMessage(fields),
+			"mrkdwn_in": ["title", "pretext", "text"]
     }];
     var message = {
         "response_type": "in_channel",
