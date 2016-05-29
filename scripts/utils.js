@@ -62,7 +62,8 @@ var openResponse = function (params) {
             "fallback": params.title.titleize(),
             "color": "#d4484d",    // good, warning, danger, or HEX value
             "title": params.title.titleize(),
-            "fields": fields
+            "fields": fields,
+            "footer": "Cast your vote using the slash command /poll vote [option]."
     }];
     var message = {
         "response_type": "in_channel",
