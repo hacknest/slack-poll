@@ -1,7 +1,7 @@
 var _formatMessage = function(fields) {
     var message = '🏆 Top Result 🏆: ' + bold(fields[0].title) + '\n\n\n';
 
-    for (var i = 0; i < fields.count; i++) {
+    for (var i = 0; i < fields.length; i++) {
         var option  = fields[i];
         message += bold(option.title) + ':\n' + bold(option.value) + ' - ' + voteBar(option.value) + '\n\n';
     }
