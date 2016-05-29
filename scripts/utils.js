@@ -46,7 +46,8 @@ var displayResultResponse = function (params) {
 };
 
 var validToken = function(token) {
-    return (token === process.env.DATABASE_URL);
+    var validToken = process.env.SLACK_TOKEN;
+    return validToken ? token === validToken : true;
 };
 
 module.exports = {
