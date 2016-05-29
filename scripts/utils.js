@@ -53,7 +53,7 @@ var resultResponse = function (info, options) {
 var openResponse = function (params) {
     var fields = params.opts.map(function (opts, index) {
         return {
-            "title" : ((index+1).toString() + ". " + opts)).titleize(),
+            "title" : ((index+1).toString() + ". " + opts).titleize(),
             "short" : false
         };
     });
