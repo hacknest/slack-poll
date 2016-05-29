@@ -114,8 +114,9 @@ var doPost = function(req, res) {
     };
     var callback = function (err, result) {
         if (err)
-            return;
-        res.json(result);
+            res.send('An error has occurred');
+        else
+            res.json(result);
     };
 
     switch (command) {
