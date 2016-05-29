@@ -36,14 +36,14 @@ var query = function(queryObj, callback) {
 var pgInsertRow = function(params, callback) {
 
     var sQuery =
-        'INSERT INTO $1 ($2) VALUES ($3)';
+        'INSERT INTO ' + params.table + ' (' + params.attr + ') VALUES ($1, $2, $3)';
 
     var queryObj = {
         query: sQuery,
-        arg: [params.table, params.attr, params.values]
+        arg: params.values
     };
 
-    query(sQuery, function(err, result) {
+    query(queryObj, function(err, result) {
         callback(err, result);
     });
 };
@@ -57,7 +57,7 @@ var open = function(params, callback) {
         arg: [params.team_id]
     };
 
-    query.(queryObj, function(err, result) {
+    query(queryObj, function(err, result) {
         if (err) {
             return callback(false);
         }
@@ -65,16 +65,16 @@ var open = function(params, callback) {
         var row = {
             table: 'poll',
             attr: 'team_id, channel_id, title',
-            values: params.team_id + ', ' + params.channel_id + ', ' + params.title
-        }
+            values: [params.team_id, params.channel_id, params.title]
+        };
 
         if (result.rowCount > 0) {
-            return close(function() {
+            return close(params, function() {
                 pgInsertRow(row, function(err, result) {
                     if (err) {
                         return callback(false);
                     }
-                    return callback(result)
+                    return callback(result);
                 });
             });
         }
@@ -83,7 +83,7 @@ var open = function(params, callback) {
             if (err) {
                 return callback(false);
             }
-            return callback(result)
+            return callback(result);
         });
     });
 };
