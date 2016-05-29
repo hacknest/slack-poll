@@ -4,12 +4,12 @@ var _calculateBarBlocks = function(sum, value) {
 };
 
 var _formatMessage = function(fields) {
-    var message = bold('🏆 Top Result 🏆: ' + fields[0].title) + '\n\n\n';
+    var message = bold('🏆 Top Result 🏆: ' + fields[0].title.titleize()) + '\n\n\n';
     var sum = fields.reduce(function(pv, cv) { return parseInt(pv) + parseInt(cv.value); }, 0);
 
     for (var i = 0; i < fields.length; i++) {
         var option  = fields[i];
-        message += bold(option.title) + ':\n' + bold(Math.floor(option.value/sum*100)) + '% - ';
+        message += bold(option.title.titleize()) + ':\n' + bold(Math.floor(option.value/sum*100)) + '% - ';
 
         if (option.value == 0) {
             message += inlineBlock('😭') + '\n\n';
@@ -34,10 +34,10 @@ var resultResponse = function (info, options) {
         return a.value > b.value ? 1 : -1;
     });
 
-    var title = "Poll Results";
+    var title = "Poll Results for " + info.title.titleize();
 
     var attachment = [{
-            "fallback": title,
+            "fallback": title.titleize(),
             "color": "#44cfaa",    // good, warning, danger, or HEX value
             "title": title,
             "text": _formatMessage(fields),
@@ -53,15 +53,15 @@ var resultResponse = function (info, options) {
 var openResponse = function (params) {
     var fields = params.opts.map(function (opts, index) {
         return {
-            "title" : (index+1).toString() + ". " + opts,
+            "title" : ((index+1).toString() + ". " + opts)).titleize(),
             "short" : false
         };
     });
 
     var attachment = [{
-            "fallback": params.title,
+            "fallback": params.title.titleize(),
             "color": "#d4484d",    // good, warning, danger, or HEX value
-            "title": params.title,
+            "title": params.title.titleize(),
             "fields": fields
     }];
     var message = {
