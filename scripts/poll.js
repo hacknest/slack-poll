@@ -17,7 +17,6 @@ var _setClosePollTimer = function(params) {
 
             var callback = function() {
                 utils.sendReply(params.request_url, message);
-                window.clearTimeout(timeout);
             };
             close(params, callback);
         });
