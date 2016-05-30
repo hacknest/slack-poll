@@ -72,7 +72,7 @@ var open = function(params, callback) {
                     callback(null, { text: 'Posting your poll now' });
 
                     utils.sendReply(params.response_url, message);
-                    _setClosePollTimer(params);
+                    // _setClosePollTimer(params);
                 });
             });
         }
@@ -87,7 +87,7 @@ var open = function(params, callback) {
             callback(null, { text: 'Posting your poll now' });
 
             utils.sendReply(params.response_url, message);
-            _setClosePollTimer(params);
+            // _setClosePollTimer(params);
         });
     });
 };
