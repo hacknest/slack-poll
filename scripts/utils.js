@@ -2,7 +2,7 @@ var request = require('request');
 
 var _formatMessage = function(fields) {
     var sum = fields.reduce(function(pv, cv) {
-        return parseInt(pv) + parseInt(cv.value);
+        return (parseInt(pv) + parseInt(cv.value));
     }, 0);
 
     if (sum === 0) {
@@ -37,7 +37,7 @@ var resultResponse = function (info, options) {
         return a.value < b.value ? 1 : -1;
     });
 
-    var title = 'Poll Results for \'' + toTitleCase(info.rows[0].title) + '\''
+    var title = 'Poll Results for \'' + toTitleCase(info.rows[0].title) + '\'';
     var attachment = [{
             "fallback": title,
             "color": "#44cfaa",    // good, warning, danger, or HEX value
@@ -87,10 +87,10 @@ var sendReply = function(url, message) {
 
     request(options, function (err, res, body) {
         if (err || res.statusCode != 200) {
-            console.error('Unable to reply to response_url: ', err)
+            console.error('Unable to reply to response_url: ', err);
         }
     });
-}
+};
 
 var bold = function(text) {
     return '*' + text + '*';
@@ -113,8 +113,8 @@ var blockQuote = function(text) {
 };
 
 var voteBar = function(total, votes) {
-    var count = _voteBarCount(total, votes)
-    if (count == 0) {
+    var count = _voteBarCount(total, votes);
+    if (count === 0) {
         return '';
     }
 
@@ -131,10 +131,10 @@ function toTitleCase(str) {
     return str.replace(/\w\S*/g, function(txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
-};
+}
 
 var _voteBarCount = function(sum, value) {
-    return count = Math.floor(value/sum * 20);   // 100% is 20 blocks
+    return Math.floor(value/sum * 20);   // 100% is 20 blocks
 };
 
 var validToken = function(token) {

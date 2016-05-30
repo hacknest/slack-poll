@@ -1,6 +1,28 @@
 var db = require('./db');
-var UTILS = require('./utils');
-var DELIMITER = ' ';
+var utils = require('./utils');
+var POLL_TIMEOUT = 600000; // 10 minutes
+
+var _setClosePollTimer = function(params) {
+    var timeout =  setTimeout(function() {
+        results(params, function(err, result) {
+            if (err || result === null) {
+                console.log("Poll has been closed or an error has occurred");
+                return;
+            }
+
+            var message = {
+                "response_type" : "in_channel",
+                "text" : "Poll was automatically closed."
+            };
+
+            var callback = function() {
+                utils.sendReply(params.request_url, message);
+                window.clearTimeout(timeout);
+            };
+            close(params, callback);
+        });
+    }, POLL_TIMEOUT);
+};
 
 var open = function(params, callback) {
     if (params.opts.length === 0) {
@@ -47,10 +69,11 @@ var open = function(params, callback) {
                     }
 
                     addOptions();
-                    var message = UTILS.openResponse(params);
+                    var message = utils.openResponse(params);
                     callback(null, { text: 'Posting your poll now' });
 
-                    UTILS.sendReply(params.response_url, message);
+                    utils.sendReply(params.response_url, message);
+                    _setClosePollTimer(params);
                 });
             });
         }
@@ -61,10 +84,11 @@ var open = function(params, callback) {
             }
 
             addOptions();
-            var message = UTILS.openResponse(params);
+            var message = utils.openResponse(params);
             callback(null, { text: 'Posting your poll now' });
 
-            UTILS.sendReply(params.response_url, message);
+            utils.sendReply(params.response_url, message);
+            _setClosePollTimer(params);
         });
     });
 };
@@ -178,16 +202,16 @@ var results = function(params, callback) {
                 return callback(err, null);
             }
 
-            var message = UTILS.resultResponse(pollInfo, optionsInfo.rows);
+            var message = utils.resultResponse(pollInfo, optionsInfo.rows);
             callback(null, { text: 'Posting results of poll now' });
 
-            UTILS.sendReply(params.response_url, message);
+            utils.sendReply(params.response_url, message);
         });
     });
 };
 
 var doPost = function(req, res) {
-    var fields = req.body.text.split(DELIMITER);
+    var fields = req.body.text.split(' ');
     var command = fields[0].toLowerCase();
     var params = {
         "team_id" : req.body.team_id,
