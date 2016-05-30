@@ -14,7 +14,7 @@ var _formatMessage = function(fields) {
         var option  = fields[i];
         message += bold(toTitleCase(option.title)) + ':\n' + bold(Math.floor(option.value/sum * 100)) + '% - ';
 
-        if (option.value == 0) {
+        if (parseInt(option.value) === 0) {
             message += inlineBlock('😭') + '\n\n';
         } else {
             message += voteBar(sum, option.value) + '\n\n';
@@ -27,9 +27,9 @@ var _formatMessage = function(fields) {
 var resultResponse = function (info, options) {
     var fields = options.map(function (opts, index) {
         return {
-            "title" : opts.option,
-            "value" : opts.count,
-            "short" : false
+            'title' : opts.option,
+            'value' : opts.count,
+            'short' : false
         };
     });
 
@@ -39,15 +39,15 @@ var resultResponse = function (info, options) {
 
     var title = 'Poll Results for \'' + toTitleCase(info.rows[0].title) + '\'';
     var attachment = [{
-            "fallback": title,
-            "color": "#44cfaa",    // good, warning, danger, or HEX value
-            "title": title,
-            "text": _formatMessage(fields),
-			"mrkdwn_in": ["title", "text"]
+            'fallback': title,
+            'color': '#44cfaa',    // good, warning, danger, or HEX value
+            'title': title,
+            'text': _formatMessage(fields),
+			'mrkdwn_in': ['title', 'text']
     }];
     var message = {
-        "response_type": "in_channel",
-        "attachments": attachment
+        'response_type': 'in_channel',
+        'attachments': attachment
     };
     return message;
 };
@@ -55,21 +55,21 @@ var resultResponse = function (info, options) {
 var openResponse = function (params) {
     var fields = params.opts.map(function (opts, index) {
         return {
-            "title" : toTitleCase((index+1).toString() + ". " + opts),
-            "short" : false
+            'title' : toTitleCase((index+1).toString() + '. ' + opts),
+            'short' : false
         };
     });
 
     var attachment = [{
-            "fallback": toTitleCase(params.title),
-            "color": "#d4484d",    // good, warning, danger, or HEX value
-            "title": toTitleCase(params.title),
-            "fields": fields,
-            "footer": "Cast your vote using the slash command /poll vote [option]."
+            'fallback': toTitleCase(params.title),
+            'color': '#d4484d',    // good, warning, danger, or HEX value
+            'title': toTitleCase(params.title),
+            'fields': fields,
+            'footer': 'Cast your vote using the slash command /poll vote [option].'
     }];
     var message = {
-        "response_type": "in_channel",
-        "attachments": attachment
+        'response_type': 'in_channel',
+        'attachments': attachment
     };
     return message;
 };
@@ -127,11 +127,11 @@ var voteBar = function(total, votes) {
     return voteBar;
 };
 
-function toTitleCase(str) {
+var toTitleCase = function(str) {
     return str.replace(/\w\S*/g, function(txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
-}
+};
 
 var _voteBarCount = function(sum, value) {
     return Math.floor(value/sum * 20);   // 100% is 20 blocks
