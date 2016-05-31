@@ -2,7 +2,7 @@ var request = require('request');
 
 var _formatMessage = function(fields) {
     var sum = fields.reduce(function(pv, cv) {
-        return (parseInt(pv) + parseInt(cv.value));
+        return (pv + parseInt(cv.value));
     }, 0);
 
     if (sum === 0) {
@@ -93,22 +93,32 @@ var sendReply = function(url, message) {
 };
 
 var bold = function(text) {
+    if (text === "")
+        return "";
     return '*' + text + '*';
 };
 
 var italics = function(text) {
+    if (text === "")
+        return "";
     return '_' + text + '_';
 };
 
 var strike = function(text) {
+    if (text === "")
+        return "";
     return '~' + text + '~';
 };
 
 var inlineBlock = function(text) {
+    if (text === "")
+        return "";
     return '`' + text + '`';
 };
 
 var blockQuote = function(text) {
+    if (text === "")
+        return "";
     return '```' + text + '```';
 };
 

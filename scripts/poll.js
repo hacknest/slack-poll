@@ -232,13 +232,13 @@ var doPost = function(req, res) {
 
     switch (command) {
         case "open":
-            var options = req.body.text.split(':');
-            if (options.length !== 2) {
+            if (fields[1].indexOf('::') < 0) {
                 return res.send('Invalid format used. Please use /poll help for more information');
             }
 
-            var title = options[0].substring(options[0].indexOf(' ')).trim();
-            var opts = options[1].split(',').map(function(s) { return s.trim(); });
+            var inputs = fields[1].split('::');
+            var title = inputs[0].trim();
+            var opts = inputs[1].split(',').map(function(s) { return s.trim(); });
 
             params.title = title;
             params.opts = opts;
