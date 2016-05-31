@@ -1,6 +1,6 @@
 <p align="center">
     <img src="/assets/header.png" width="50%"/>
-    <img src="/assets/screenshots/auto-complete new.png" width="90%"/>
+    <img src="/assets/screenshots/auto-complete.png" width="90%"/>
 </p>
 
 ## Overview
