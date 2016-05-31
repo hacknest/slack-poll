@@ -1,6 +1,6 @@
 <p align="center">
     <img src="/assets/header.png" width="50%"/>
-    <img src="/assets/screenshots/auto-complete.png" width="90%"/>
+    <img src="/assets/screenshots/auto-complete new.png" width="90%"/>
 </p>
 
 ## Overview
@@ -18,7 +18,7 @@ This custom command allows users to create simple polls, and vote **anonymously*
 
 ---
 
-**Command:** `/poll open [title] : [option 1], [option 2], ...`
+**Command:** `/poll open [title] :: [option 1], [option 2], ...`
 
 To create a new poll, use the command `/poll open` and provide a title and a list of options to vote for. Each channel may have at most one open poll -- creating a new poll will close an existing opened poll.
 
